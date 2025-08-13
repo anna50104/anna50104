@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Image Gallery</title>
+    <!-- Include Tailwind CSS via CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for a cleaner look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl w-full text-center">
+        <!-- Title of the gallery -->
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-6">My Image Gallery</h1>
+        
+        <!-- Container for the images using a responsive grid layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- First image container -->
+            <div class="flex justify-center items-center">
+                <img src="image.jpg" alt="First uploaded image" class="rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+            </div>
+            
+            <!-- Second image container -->
+            <div class="flex justify-center items-center">
+                <img src="image2.jpg" alt="Second uploaded image" class="rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+            </div>
+        </div>
+
+        <!-- Acknowledgment of the sources used -->
+        <div class="mt-8 text-sm text-gray-600">
+            <p>
+                These images were provided by you. The styling and layout for this website are powered by <a href="https://tailwindcss.com/" target="_blank" class="text-blue-500 hover:underline">Tailwind CSS</a>.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

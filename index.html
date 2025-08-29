@@ -1,43 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Image Gallery</title>
-    <!-- Include Tailwind CSS via CDN for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom styles for a cleaner look */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1–6 圖片切換器</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #121827;
+      --muted: #8ea0b5;
+      --text: #e8eef6;
+      --accent: #4f8cff;
+      --accent-2: #7aa2ff;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, "Microsoft JhengHei", sans-serif;
+      background: radial-gradient(1200px 800px at 80% -10%, #1a2452 0%, var(--bg) 60%);
+      color: var(--text);
+      display: grid; place-items: center;
+      padding: 24px;
+    }
+    .app {
+      width: min(1080px, 96vw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,.35);
+      overflow: hidden;
+    }
+    header {
+      padding: 14px 16px; background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+      justify-content: center;
+    }
+    header h1 { font-size: 16px; font-weight: 600; margin: 0 8px 0 0; color: var(--muted); letter-spacing: .2px; }
+    .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btns button {
+      appearance: none; border: 0; cursor: pointer; font-weight: 700;
+      padding: 10px 14px; border-radius: 999px; letter-spacing: .5px;
+      color: var(--text); background: #1c2541; outline: none;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform .08s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .btns button:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.25); }
+    .btns button[aria-pressed="true"] {
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      color: #0b1020; border-color: transparent;
+    }
+    main { padding: 16px; }
+    .stage {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; overflow: hidden; position: relative;
+      min-height: min(70vh, 70vw);
+      display: grid; place-items: center;
+    }
+    .stage img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .caption { position: absolute; inset: auto 12px 12px; font-size: 13px; color: var(--muted); background: rgba(0,0,0,.35); padding: 6px 10px; border-radius: 8px; backdrop-filter: blur(6px); }
+    footer { text-align: center; padding: 10px; color: var(--muted); font-size: 12px; }
+    a { color: var(--accent-2); text-decoration: none; }
+  </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl w-full text-center">
-        <!-- Title of the gallery -->
-        <h1 class="text-4xl font-extrabold text-gray-800 mb-6">My Image Gallery</h1>
-        
-        <!-- Container for the images using a responsive grid layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- First image container -->
-            <div class="flex justify-center items-center">
-                <img src="image.jpg" alt="First uploaded image" class="rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
-            </div>
-            
-            <!-- Second image container -->
-            <div class="flex justify-center items-center">
-                <img src="image2.jpg" alt="Second uploaded image" class="rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
-            </div>
-        </div>
+<body>
+  <div class="app" role="application">
+    <header>
+      <h1>選擇圖片：</h1>
+      <div class="btns" role="tablist" aria-label="圖片選擇器">
+        <!-- 按鈕 1~6，使用 data-file 指向 1.jpg～6.jpg -->
+        <button role="tab" aria-controls="image" aria-pressed="true" data-file="1.jpg">1</button>
+        <button role="tab" aria-controls="image" aria-pressed="false" data-file="2.jpg">2</button>
+        <button role="tab" aria-controls="image" aria-pressed="false" data-file="3.jpg">3</button>
+        <button role="tab" aria-controls="image" aria-pressed="false" data-file="4.jpg">4</button>
+        <button role="tab" aria-pressed="false" aria-controls="image" data-file="5.jpg">5</button>
+        <button role="tab" aria-pressed="false" aria-controls="image" data-file="6.jpg">6</button>
+      </div>
+    </header>
 
-        <!-- Acknowledgment of the sources used -->
-        <div class="mt-8 text-sm text-gray-600">
-            <p>
-                These images were provided by you. The styling and layout for this website are powered by <a href="https://tailwindcss.com/" target="_blank" class="text-blue-500 hover:underline">Tailwind CSS</a>.
-            </p>
-        </div>
-    </div>
+    <main>
+      <div class="stage">
+        <img id="image" src="1.jpg" alt="展示圖片 1" />
+        <div class="caption" id="caption">顯示：1.jpg</div>
+      </div>
+    </main>
+
+    <footer>將 <code>1.jpg</code>～<code>6.jpg</code> 放在與本檔案相同資料夾，即可在 GitHub Pages 顯示。</footer>
+  </div>
+
+  <script>
+    (function () {
+      const img = document.getElementById('image');
+      const caption = document.getElementById('caption');
+      const btns = Array.from(document.querySelectorAll('.btns button'));
+
+      // Preload 1~6.jpg（若不存在也不影響顯示）
+      for (let i = 1; i <= 6; i++) {
+        const pre = new Image();
+        pre.src = `${i}.jpg`;
+      }
+
+      function setActive(file) {
+        // 更新圖片
+        img.src = file;
+        img.alt = `展示圖片 ${file.replace(/\D/g, '') || ''}`;
+        caption.textContent = `顯示：${file}`;
+        // 更新按鈕狀態
+        btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.file === file)));
+        // 更新網址 #hash，方便直接連結
+        const n = file.replace(/\.jpg$/i, '');
+        if (location.hash !== `#${n}`) location.hash = `#${n}`;
+      }
+
+      // 點擊事件
+      btns.forEach(btn => btn.addEventListener('click', () => setActive(btn.dataset.file)));
+
+      // 支援鍵盤 1~6 快捷
+      window.addEventListener('keydown', (e) => {
+        if (e.key >= '1' && e.key <= '6') {
+          const file = `${e.key}.jpg`;
+          const target = btns.find(b => b.dataset.file === file);
+          if (target) { target.focus(); setActive(file); }
+        }
+      });
+
+      // 依網址 #1~#6 開啟對應圖片
+      function initFromHash() {
+        const n = (location.hash || '').replace('#','');
+        if (/^[1-6]$/.test(n)) setActive(`${n}.jpg`);
+      }
+      window.addEventListener('hashchange', initFromHash);
+      initFromHash();
+    })();
+  </script>
 </body>
 </html>
